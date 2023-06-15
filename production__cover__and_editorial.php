@@ -11,11 +11,12 @@ require 'connection.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production, Cover, and Editorial</title>
 
+    <script src="style/jquery-2.1.3.min.js"></script> 
     <link href="style/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
-    <script src="style/bootstrap.bundle.min.js"></script>
+    <!--<script src="style/bootstrap.bundle.min.js"></script>-->
     <script src="style/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="style/jquery.bootpag.min.js"></script>
     <link rel="stylesheet" href="style/style.css">
     <script>
         function Show_cfrontText(value) {
@@ -37,7 +38,7 @@ function Show_cbackText(value) {
 function show_coverId(value) {
 
     if (value != null) {
-        document.getElementById('coverImageId').value =" "+ value;
+        document.getElementById('coverImageId').value =" "+ value.value;
         document.getElementById('coverImageId').style.display = 'inline';
     }
 
@@ -86,7 +87,7 @@ function validateForm() {
     //var visionDesign = document.authorForm.visionDesign.value;
     //var coverImageId = document.authorForm.coverImageId.value;
 
-    var file=document.getElementById("fileUpload").value;
+    var file=document.getElementById("fileLength").value;
 
     // Defining error variables with a default value
     var paperWeightErr = coverTypeErr = priceBarcodeErr = trimSizeErr = dimenSpecificationErr /*= servicesErr*/ = artImageErr = authorImageErr /*= visionDesignErr*/=fileErr/*=coverImageIdErr*/= true;
@@ -195,7 +196,7 @@ function validateForm() {
     console.log("fileErr:"+fileErr);
     //console.log("coverImageIdErr:"+coverImageIdErr);
     
-    alert("Please fill the mandatory fileds.");
+    alert("\n\u26A0\uFE0F Please fill the mandatory fileds.");
     return false;
     }
     else {
@@ -219,7 +220,7 @@ function validateForm() {
    
 };
 
-/*Files upload*/
+/*Files upload
 window.addEventListener("load", () => {
     const input = document.getElementById("fileUpload");
     // const filewrapper=document.getElementById("filewrapper");
@@ -242,7 +243,67 @@ window.addEventListener("load", () => {
         // console.log(showfileboxElem);
         //  filewrapper.append(showfileboxElem);
     }
-})
+})*/
+
+$(document).ready(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: 'getcovers.php',
+            dataType: 'json',
+            cache: false,
+            beforeSend: function () {
+                $("div.list-users").html('<h4>Selfpublish</h4>');
+            }
+        })
+            .done(function (data) {
+                $.each(data, function (idx, obj) {
+                    if (idx >= 6) return;
+                    $('div.covers').append('<div class="col-sm-4 p-1"><button type="button" id="' + obj.cover_id + '" onclick="show_coverId('+ obj.cover_id +')" value="'+ obj.cover_id +'"><img class="img-fluid" src="images/' + obj.cover_image + '" alt="' + obj.cover_image + '" border="0" /></button></div>');
+                    // $('div.card').append('<button style="border:0;" type="submit" id="' + obj.cover_id + '"><img  class="card-img-top" src="images/' + obj.cover_image + '" alt="' + obj.cover_image + '" border="0" /></button>');
+                    /*$('div.allusers').append('<div class="user">' + obj.cover_id + '<p class="name"></p><p class="email">' + obj.cover_image + '</p></div>');*/
+                });
+                $('#page-selection').bootpag({
+                    total: Math.ceil(data.length / 6)
+                }).on("page", function (event, /* page number here */ num) {
+                    $('div.covers').html('');
+                    GetresultPaginate(num)
+                });
+
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown)
+            });
+        function GetresultPaginate(currentnum) {
+
+            $.ajax({
+                type: 'POST',
+                url: 'getcoversPage.php',
+                dataType: 'json',
+                data: {
+                    num: currentnum
+                },
+                cache: false,
+                beforeSend: function () {
+                    $("div.list-users").html('<h4>Selfpublish</h4>');
+                }
+            })
+                .done(function (data) {
+
+                    $.each(data, function (idx, obj) {
+                        $('div.covers').append('<div class="col-sm-4 p-1"><button type="button" id="' + obj.cover_id + '" onclick="show_coverId('+ obj.cover_id +')"value="'+ obj.cover_id +'"><img class="img-fluid" src="images/' + obj.cover_image + '" alt="' + obj.cover_image + '" border="0" /></button></div>');
+                        // $('div.card').append('<button style="border:0;" type="submit" id="' + obj.cover_id + '"><img class="card-img-top" src="images/' + obj.cover_image + '" alt="' + obj.cover_image + '" border="0" /></button>');
+                        /*$('div.allusers').append('<div class="user">' + obj.cover_id + '<p class="name"></p><p class="email">' + obj.cover_image + '</p></div>');*/
+                    });
+
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown)
+                });
+
+        }
+});
 
     </script>
 </head>
@@ -282,7 +343,7 @@ window.addEventListener("load", () => {
 
 
             <div class="col-lg-6">
-                <h3 class="text-center p-2 " style="color:white; margin-top: 10px;">PRODUCTION, COVER, AND EDITORIAL</h3>
+                <h3 class="text-center p-2 heading">PRODUCTION, COVER, AND EDITORIAL</h3>
             </div>
 
         </div>
@@ -295,7 +356,7 @@ window.addEventListener("load", () => {
                 enctype="multipart/form-data" class="form" novalidate>
 
                 <!--<h5 class="text-danger text-center">
-                    <?php if (($result['submitCount'])) {
+                    <?php if (!empty($result['submitCount'])) {
                         echo "If any query, please contact <span class='text-primary'><u>selfpublish@s4carlisle.com</u></span>.";
                     } ?>
                 </h5> -->
@@ -734,7 +795,7 @@ window.addEventListener("load", () => {
                         <!--<div class="text-danger" id="coverImageIdErr"></div>-->
 
 
-                        <div <?php if ((!empty($result['template_id']))) {
+                        <!--<div <?php if ((!empty($result['template_id']))) {
                             echo 'style="display:none;"';
                         } else {
                             echo 'style="display:block;"';
@@ -762,6 +823,13 @@ window.addEventListener("load", () => {
                                     <?php } ?>
                                 </div>
                             </div>
+                        </div>-->
+                        
+                        <div <?php if ((!empty($result['template_id']))) {echo 'style="display:none;"';} else {echo 'style="display:block;"';} ?>>
+
+                            <div class="row covers   p-1"></div>   
+                            <div class="text-center" id="page-selection"></div>               
+                        
                         </div>
                         <div class="border p-2" <?php if ((!empty($result['template_id']))) {
                             echo 'style="display:block;"';
@@ -793,7 +861,7 @@ window.addEventListener("load", () => {
                     </div>
 
                 </div>
-                    <div class="row">
+                <div class="row">
                         <div class="col-md-6 mt-md-0 mt-3">
                             <label>Your vision for your design.<!--<span class="text-danger">*</span>-->
                                 <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
@@ -818,16 +886,17 @@ window.addEventListener("load", () => {
                             <!--<div class="text-danger" id="visionDesignErr"></div>-->
 
                         </div>
+                        
                         <div class="col-md-6 mt-md-0 mt-3">
 
-                            <div <?php if ((!empty($result['fileName']))) {
-                                echo 'style="display:none;"';
-                            } else {
-                                echo 'style="display:block;"';
-                            } ?>>
-                                <label>Upload your manuscript and other files?<span class="text-danger">*</span>
+                        <div <?php if ((!empty($result['fileName']))&&(($result['submitCount']))) {
+                            echo 'style="display:none;"';
+                        } else {
+                            echo 'style="display:block;"';
+                        } ?>>
+                            <label>Upload your manuscript and other files<span class="text-danger">*</span>
                                 <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
-                                    title="You can upload your files as either one zip file and multiple files.">
+                                    title="You can upload your files as either one zip file or multiple files. Allowed file types are Image, Text, Pdf, Word, Excel, PowerPoint and Zip. Overall maximum file size limit is 500 MB.">
                                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18"
                                         viewBox="0 0 512 512">
                                         <path fill="#25B7D3"
@@ -838,11 +907,11 @@ window.addEventListener("load", () => {
                                         </path>
                                     </svg>
                                 </div>
-                                    <div style="display:inline;" class="text-danger" id="fileErr"></div>
-                                </label>
-                                <div class="text-center">
+                                <div style="display:inline;" class="text-danger" id="fileErr"></div>
+                            </label>
+                            <!--<div class="text-center">
                                     <label class="form-control upload_label">
-                                        <input type="file" class="form-control upload_hide" id="fileUpload"
+                                        <input type="file" class="form-control upload_hide" id="fileInput"
                                             name="myfile[]" multiple required>
 
 
@@ -852,48 +921,215 @@ window.addEventListener("load", () => {
 
                                     </label>
 
+                                </div>-->
+                            <div class="border p-2">
+                                <div class="dropZone text-primary" id="dropZone">
+                                <span style="display:block"><i class="fa fa-cloud-upload text-centre text-primary fa-5x"></i></span>
+                                    Drag & Drop to upload your file(s) here!
+                                   
                                 </div>
+                                <div class="msg text-primary" style="display: none;" id="msg">
+                                File(s) uploaded successfully!
+                                    <input type="text" id="fileLength" style="display: none;" name="fileLength" readonly="readonly"/>
+                                    
+                                </div>
+                                <div class="file-list" id="fileList">
+                                    <!-- File items will be dynamically added here -->
+                                </div>
+                                <div class="text-center"><button class="upload-button" type="button" id="uploadButton"
+                                        disabled>Upload</button></div>
 
                             </div>
-                            <div <?php if ((!empty($result['fileName']))) {
-                                echo 'style="display:block;"';
-                            } else {
-                                echo 'style="display:none;"';
-                            } ?>>
-                                <label> Download manuscript file<span class="text-danger">*</span></label>
-                                <div class="text-center">
-                                    <label class="form-control upload_label">
-                                        <a download="<?php echo $result['fileName']; ?>"
-                                            href="uploads/<?php echo $result['fileName'] ?>"><span><i
-                                                    class="fa fa-cloud-download text-centre text-primary fa-5x"></i></span>
-                                            <p class="text-centre text-primary" id="noOfFiles">Download manuscript
-                                                file
-                                            </p>
-                                        </a>
+                            <script>
+                                 // file Upload
 
-                                    </label>
+                                    var fileList = [];
+                                    var totalFileSize = 0;
+                                    var maxFileSize = 500 * 1024 * 1024; // 500MB limit
 
-                                </div>
+                                    // Function to handle file drop
+                                    function handleDrop(e) {
+                                        e.preventDefault();
+                                        var files = e.dataTransfer.files;
+                                        for (var i = 0; i < files.length; i++) {
+                                            var file = files[i];
+                                            if (isValidFile(file)) {
+                                                addFileToList(file);
+                                                totalFileSize += file.size;
+                                            } else {
+                                               // alert('Invalid file format or size exceeded. \n\nAllowed file types (Image, Text, Pdf, Word, Excel, PowerPoint, Zip) \nOverall maximum file size limit is 500 MB.');
+                                               alert('\n\u26A0\uFE0F Invalid file format or size exceeded. \n\nAllowed file types are Image, Text, Pdf, Word, Excel, PowerPoint and Zip. \nOverall maximum file size limit is 500 MB.');
+
+
+                                            }
+                                        }
+                                        document.getElementById('uploadButton').disabled = !canUpload();
+                                    }
+
+                                    // Function to handle file drag over
+                                    function handleDragOver(e) {
+                                        e.preventDefault();
+                                    }
+
+                                    // Function to check if file is valid
+                                    function isValidFile(file) {
+                                        var fileType = file.type.toLowerCase();
+                                        var validExtensions = [ 'image/jpeg',
+                                                                'image/png',
+                                                                'application/msword',
+                                                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                                                'application/pdf',
+                                                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                                                'application/zip',
+                                                                'application/x-zip-compressed',
+                                                                'application/x-7z-compressed',
+                                                                'application/x-rar-compressed',
+                                                                'text/plain',
+                                                                'application/xml',
+                                                                'application/vnd.ms-powerpoint',
+                                                                'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+                                        var maxFileSizeExceeded = file.size > maxFileSize;
+
+                                        return validExtensions.includes(fileType) && !maxFileSizeExceeded;
+                                    }
+
+                                    // Function to add file to the file list
+                                    function addFileToList(file) {
+                                        var fileItem = document.createElement('div');
+                                        fileItem.className = 'file-item';
+
+                                        var fileName = document.createElement('span');
+                                        fileName.className = 'file-name';
+                                        fileName.textContent = file.name;
+                                        fileItem.appendChild(fileName);
+
+                                        var deleteButton = document.createElement('span');
+                                        deleteButton.className = 'delete-button';
+                                        deleteButton.textContent = 'Delete';
+                                        deleteButton.addEventListener('click', function () {
+                                            deleteFile(file);
+                                            fileItem.remove();
+                                        });
+                                        fileItem.appendChild(deleteButton);
+
+                                        fileList.push(file);
+                                        document.getElementById('fileList').appendChild(fileItem);
+                                    }
+
+                                    // Function to delete file from the file list
+                                    function deleteFile(file) {
+                                        var index = fileList.indexOf(file);
+                                        if (index !== -1) {
+                                            fileList.splice(index, 1);
+                                            totalFileSize -= file.size;
+                                        }
+                                    }
+
+                                    // Function to check if files can be uploaded
+                                    function canUpload() {
+                                        return fileList.length > 0 && totalFileSize <= maxFileSize;
+                                    }
+
+                                    // Function to upload the files to the server
+                                    function uploadFiles() {
+                                        var formData = new FormData();
+                                        for (var i = 0; i < fileList.length; i++) {
+                                            var file = fileList[i];
+                                            document.getElementById("fileLength").value=fileList.length;
+                                            formData.append('files[]', file);
+                                        }
+
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open('POST', 'zip_files.php?id=<?php echo $eid; ?>', true);
+                                        xhr.onreadystatechange = function () {
+                                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                                var response = JSON.parse(xhr.responseText);
+                                                //console.log(response);
+                                                //var fileUploadresponse = JSON.parse(xhr.responseText);
+
+                                                /*if (fileUploadresponse.success) {
+                                                    alert('Files were uploaded in mysql');
+                                                    resetFileList();
+                                                    dropZone.style.display = 'none';
+                                                    msg.style.display = 'block';
+                                                } else {
+                                                    alert('An error occurred while zipping the files.');
+                                                }*/
+
+                                                if (response.success) {
+                                                    alert('\n\u2714 File(s) uploaded successfully!');
+                                                    resetFileList();
+                                                    dropZone.style.display = 'none';
+                                                    upload.style.display = 'none';
+                                                    msg.style.display = 'block';
+                                                } else {
+                                                    alert('\n\u26A0 An error occurred while uploading the files.');
+                                                }
+                                            }
+                                        };
+                                        xhr.send(formData);
+                                    }
+
+                                    // Function to reset the file list
+                                    function resetFileList() {
+                                        fileList = [];
+                                        totalFileSize = 0;
+                                        document.getElementById('fileList').innerHTML = '';
+                                        document.getElementById('uploadButton').disabled = true;
+                                    }
+
+                                    // Attach event listeners to the drop zone
+                                    var dropZone = document.getElementById('dropZone');
+                                    var msg = document.getElementById('msg');
+                                    var upload = document.getElementById('uploadButton');
+                                    dropZone.addEventListener('dragover', handleDragOver);
+                                    dropZone.addEventListener('drop', handleDrop);
+
+                                    // Attach event listener to the upload button
+                                    var uploadButton = document.getElementById('uploadButton');
+                                    uploadButton.addEventListener('click', uploadFiles);
+                            </script>
+
+                        </div>
+                        <div <?php if ((!empty($result['fileName']))&&(($result['submitCount']))) {
+                            echo 'style="display:block;"';
+                        } else {
+                            echo 'style="display:none;"';
+                        } ?>>
+                            <label> Download manuscript file(s)<span class="text-danger">*</span></label>
+                            <div class="text-center">
+                                <label class="form-control dropzone1">
+                                    <a download="<?php echo $result['fileName']; ?>"
+                                        href="uploads/<?php echo $result['fileName'] ?>"><span><i
+                                                class="fa fa-cloud-download text-centre text-primary fa-5x"></i></span>
+                                        <p class="text-centre text-primary" id="noOfFiles">Download manuscript
+                                            file(s)
+                                        </p>
+                                    </a>
+
+                                </label>
 
                             </div>
-
 
                         </div>
 
+
                     </div>
 
+                </div>
 
-                    <div class="row">
+
+                <div class="row">
                         <div class="col-md-12 mt-md-0 mt-3 text-center">
-                            <button type="submit" class="btn btn-primary btn-lg" name="save" <?php if (($result['submitCount'])) {
+                            <button type="submit" class="btn btn-primary btn-lg" name="save" <?php if (!empty($result['submitCount'])) {
                                 echo 'disabled="disabled"';
                             } ?>>Submit</button>
                         </div>
-                    </div>
-                    <div class="row">
+                </div>
+                <div class="row">
                         <div class="col-md-12 mt-md-0 mt-3 text-center">
                             <p class="text-danger text-center">
-                                <?php if (($result['submitCount'])) {
+                                <?php if (!empty($result['submitCount'])) {
                                      
                                     echo 'Form already submitted, please contact <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a> for updates.';
                                    
@@ -904,7 +1140,7 @@ window.addEventListener("load", () => {
                                 }?>
                             </p>
                         </div>
-                    </div>
+                </div>
             </form>
         </div>
     </div>

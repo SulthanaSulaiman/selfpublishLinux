@@ -1178,7 +1178,7 @@ $(document).ready(function () {
         {
                 $.ajax({
                     method: "post",
-                    url:"http://10.1.6.32/selfpublishing/productionMailer.php?id=<?php echo $eid; ?>",
+                    url:"http://selfpublish.s4carlisle.com/productionMailer.php?id=<?php echo $eid; ?>",
                     dataType: "json",
                     data:$('#authorForm').serialize(),
                     async: false,

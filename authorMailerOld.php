@@ -15,7 +15,7 @@ function cleanStr($string)
 }
 
 /* details extracts from link 
-http://10.1.6.32/selfpublishing/get_method.php?companyId=11829044757&groupId=11829076861
+http://selfpublish.s4carlisle.com/get_method.php?companyId=11829044757&groupId=11829076861
 
 & bookInfo={"Author Name": "John Doe","Email": "JD@gmail.com","ISBN": "","Cover": "Color","Editorial Complexity": "Low",
     "Number of Manuscript Pages": "251"}
@@ -235,7 +235,7 @@ VALUES ('" . $id . "','" . $authorName . "','" . $authorEmail . "','" . $categor
     <p>Dear ' . $userName . '</p>
     <p>Thank you for choosing to work with us to create your book cover design. Our professional design team stands ready to guide you through each step of the process. We will work closely with you to deliver an eye-catching cover design that will make readers take notice. 
     We will be asking you to provide information and various elements we will need to complete this project, such as relevant specifications, text to appear on the cover, and any images (for which you own all rights and permissions) you would like us to use.</p>
-    <p>Just <a href="http://10.1.6.32/selfpublishing/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
+    <p>Just <a href="http://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
     <p>Regards,<br>S4Carlisle Design Team</p>
     ';
         $mail->AltBody = $category;

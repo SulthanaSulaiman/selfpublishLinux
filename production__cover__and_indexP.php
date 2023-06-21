@@ -69,7 +69,7 @@ require 'connection.php';
         <div class="wrapper rounded bg-white">
 
             <form name="authorForm" onsubmit="return validateForm()"
-                action="http://selfpublish.s4carlisle.com/productionMailer.php?id=<?php echo $eid; ?>" method="post"
+                action="https://selfpublish.s4carlisle.com/productionMailer.php?id=<?php echo $eid; ?>" method="post"
                 enctype="multipart/form-data" class="form" novalidate>
 
                 <h5 style="text-align:right;" class="text-primary">

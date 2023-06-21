@@ -18,7 +18,7 @@ function cleanStr($string)
 
 //extract($_GET);
 /* details extracts from link 
-http://selfpublish.s4carlisle.com/get_method.php?companyId=11829044757&groupId=11829076861
+https://selfpublish.s4carlisle.com/get_method.php?companyId=11829044757&groupId=11829076861
 
 & bookInfo={"Author Name": "John Doe","Email": "JD@gmail.com","ISBN": "","Cover": "Color","Editorial Complexity": "Low",
     "Number of Manuscript Pages": "251"}
@@ -55,17 +55,17 @@ if (isset($_GET['bookInfo'])) {
                 $authorName = $bookInfo["Author Name"];
             } else {
                 $authorName = null;
-                $error_count += 1;
+                //$error_count += 1;
             }
         } else {
             $authorName = null;
-            $resp[] = array(
+            /*$resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'Author Name is not found.'
             );
             $error_count += 1;
             //header('Content-Type: application/json; charset=utf-8');
-            //echo json_encode($resp);
+            //echo json_encode($resp);*/
         }
 
         //Author email
@@ -74,34 +74,34 @@ if (isset($_GET['bookInfo'])) {
                 $authorEmail = $bookInfo["Email"];
                 $pattern = '/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/';
                 if (preg_match($pattern, $authorEmail) == 0) {
-                    $resp[] = array(
+                   /* $resp[] = array(
                         'StatusCode' => 'JSON003',
                         'Status' => 'Email contains invalid mail id.'
                     );
-                    $error_count += 1;
+                  //  $error_count += 1;*/
                    // header('Content-Type: application/json; charset=utf-8');
                    // echo json_encode($resp);
                 }
             } else {
                 $authorEmail = null;
-                $resp[] = array(
+                /*$resp[] = array(
                     'StatusCode' => 'JSON002',
                     'Author Email' => 'Author Email is empty.'
 
                 );
                 $error_count += 1;
                 //header('Content-Type: application/json; charset=utf-8');
-                //echo json_encode($resp);
+                //echo json_encode($resp);*/
             }
         } else {
             $authorEmail = null;
-            $resp[] = array(
+            /*$resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'Author Email is not found.'
             );
             $error_count += 1;
             //header('Content-Type: application/json; charset=utf-8');
-            //echo json_encode($resp);
+            //echo json_encode($resp);*/
         }
 
         //ISBN
@@ -112,13 +112,13 @@ if (isset($_GET['bookInfo'])) {
                 $isbn = null;
             }
         } else {
-            $isbn = null;
+           /* $isbn = null;
             $resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'ISBN is not found.'
             );
            // header('Content-Type: application/json; charset=utf-8');
-            //echo json_encode($resp);
+            //echo json_encode($resp);*/
         }
 
 
@@ -133,12 +133,12 @@ if (isset($_GET['bookInfo'])) {
         } else {
             $interiorDesign = null;
 
-            $resp[] = array(
+            /*$resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'Cover is not found.'
             );
            // header('Content-Type: application/json; charset=utf-8');
-            //echo json_encode($resp);
+            //echo json_encode($resp);*/
 
         }
 
@@ -152,13 +152,13 @@ if (isset($_GET['bookInfo'])) {
             }
         } else {
             $editorialComplexity = null;
-            $resp[] = array(
+            /*$resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'Editorial Complexity is not found.'
             );
 
             //header('Content-Type: application/json; charset=utf-8');
-            //echo json_encode($resp);
+            //echo json_encode($resp);*/
         }
 
         //Number of Manuscript Pages
@@ -166,16 +166,16 @@ if (isset($_GET['bookInfo'])) {
             if (!empty($bookInfo["Number of Manuscript Pages"])) {
                 $nuberOfMenuscriptPages = $bookInfo["Number of Manuscript Pages"];
             } else {
-                $nuberOfMenuscriptPages = null;
+                $nuberOfMenuscriptPages = 0;
             }
         } else {
-            $nuberOfMenuscriptPages = null;
-            $resp[] = array(
+            $nuberOfMenuscriptPages = 0;
+            /*$resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'Number of Manuscript Pages is not found.'
             );
             //header('Content-Type: application/json; charset=utf-8');
-            //echo json_encode($resp);
+            //echo json_encode($resp);*/
         }
 
     } else {
@@ -185,15 +185,15 @@ if (isset($_GET['bookInfo'])) {
         $isbn = null;
         $interiorDesign = null;
         $editorialComplexity = null;
-        $nuberOfMenuscriptPages = null;
+        $nuberOfMenuscriptPages = 0;
 
-        $resp[] = array(
+       /* $resp[] = array(
             'StatusCode' => 'JSON002',
             'Status' => 'Book Info is empty.'
         );
         $error_count += 1;
         //header('Content-Type: application/json; charset=utf-8');
-        //echo json_encode($resp);
+        //echo json_encode($resp);*/
     }
 } else {
     $bookInfo = null;
@@ -202,15 +202,15 @@ if (isset($_GET['bookInfo'])) {
     $isbn = null;
     $interiorDesign = null;
     $editorialComplexity = null;
-    $nuberOfMenuscriptPages = null;
+    $nuberOfMenuscriptPages = 0;
 
-    $resp[] = array(
+    /*$resp[] = array(
         'StatusCode' => 'JSON001',
         'Status' => 'Book Info is not found.'
     );
     $error_count += 1;
     //header('Content-Type: application/json; charset=utf-8');
-    //echo json_encode($resp);
+    //echo json_encode($resp);*/
 }
 
 //Book Details
@@ -269,6 +269,11 @@ if (isset($_GET['bookDetails'])) {
                 $bookTitle = $bookDetails["bookName"];
             } else {
                 $bookTitle = null;
+                $resp[] = array(
+                    'StatusCode' => 'JSON002',
+                    'Status' => 'bookName is empty.'
+                );
+                $error_count += 1;
             }
         } else {
             $bookTitle = null;
@@ -276,6 +281,7 @@ if (isset($_GET['bookDetails'])) {
                 'StatusCode' => 'JSON001',
                 'Status' => 'bookName is not found.'
             );
+            $error_count += 1;
             //header('Content-Type: application/json; charset=utf-8');
             //echo json_encode($resp);
         }
@@ -288,7 +294,7 @@ if (isset($_GET['bookDetails'])) {
 
         $resp[] = array(
             'StatusCode' => 'JSON002',
-            'Status' => 'Book Details is empty.'
+            'Status' => 'bookDetails is empty.'
         );
         $error_count += 1;
         //header('Content-Type: application/json; charset=utf-8');
@@ -302,7 +308,7 @@ if (isset($_GET['bookDetails'])) {
 
     $resp[] = array(
         'StatusCode' => 'JSON001',
-        'Status' => 'Book Details is not found.'
+        'Status' => 'bookDetails is not found.'
     );
     $error_count += 1;
     //header('Content-Type: application/json; charset=utf-8');
@@ -322,6 +328,11 @@ if (isset($_GET['userDetails'])) {
                 $firstName = $userDetails["firstName"];
             } else {
                 $firstName = null;
+                $resp[] = array(
+                    'StatusCode' => 'JSON002',
+                    'Status' => 'firstName is empty.'
+                );
+                $error_count += 1;
             }
         } else {
             $firstName = null;
@@ -329,6 +340,7 @@ if (isset($_GET['userDetails'])) {
                 'StatusCode' => 'JSON001',
                 'Status' => 'firstName is not found.'
             );
+            $error_count += 1;
             //header('Content-Type: application/json; charset=utf-8');
             //echo json_encode($resp);
         }
@@ -339,6 +351,11 @@ if (isset($_GET['userDetails'])) {
                 $surName = $userDetails["surName"];
             } else {
                 $surName = null;
+                $resp[] = array(
+                    'StatusCode' => 'JSON002',
+                    'Status' => 'surName is empty.'
+                );
+                $error_count += 1;
             }
         } else {
             $surName = null;
@@ -346,6 +363,7 @@ if (isset($_GET['userDetails'])) {
                 'StatusCode' => 'JSON001',
                 'Status' => 'surName is not found.'
             );
+            $error_count += 1;
             //header('Content-Type: application/json; charset=utf-8');
             //echo json_encode($resp);
         }
@@ -357,13 +375,15 @@ if (isset($_GET['userDetails'])) {
             $surName=null;
         }
         $userName = $firstName.$surName;
-
+        $authorName=$userName;
 
         //user email
         if (isset($userDetails["mailId"])) {
             if (!empty($userDetails["mailId"])) {
                 $userMail = $userDetails["mailId"];
+                
                 $pattern = '/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/';
+                
                 if (preg_match($pattern, $userMail) == 0) {
                     $resp[] = array(
                         'StatusCode' => 'JSON003',
@@ -373,9 +393,10 @@ if (isset($_GET['userDetails'])) {
                     //header('Content-Type: application/json; charset=utf-8');
                     //echo json_encode($resp);
                 }
-
+                $authorEmail=$userMail;
             } else {
                 $userMail = null;
+                $authorEmail=null;
                 $resp[] = array(
                     'StatusCode' => 'JSON002',
                     'Status' => 'mailId is empty'
@@ -386,6 +407,7 @@ if (isset($_GET['userDetails'])) {
             }
         } else {
             $userMail = null;
+            $authorEmail=null;
             $resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'mailId is not found'
@@ -400,9 +422,12 @@ if (isset($_GET['userDetails'])) {
         $firstName = null;
         $surName = null;
         $userName = null;
+        $userMail = null;
+        $authorName=null;
+        $authorEmail=null;
         $resp[] = array(
             'StatusCode' => 'JSON002',
-            'Status' => 'User Details is empty.'
+            'Status' => 'userDetails is empty.'
         );
         $error_count += 1;
        // header('Content-Type: application/json; charset=utf-8');
@@ -414,9 +439,12 @@ if (isset($_GET['userDetails'])) {
     $firstName = null;
     $surName = null;
     $userName = null;
+    $authorName=null;
+    $userMail = null;
+    $authorEmail=null;
     $resp[] = array(
         'StatusCode' => 'JSON002',
-        'Status' => 'User Details is not found.'
+        'Status' => 'userDetails is not found.'
     );
     $error_count += 1;
    //header('Content-Type: application/json; charset=utf-8');
@@ -511,14 +539,14 @@ if ($error_count == 0) {
         $emailBody = '<p>Dear ' . $userName . ',</p>
         <p>Thank you for trusting our team to create a great-looking page layout for your book. We will handle all technical aspects of the project, ensure that your book will meet all standard print requirements, and deliver a high-quality, professional design. We’re confident you will be pleased with the results.</p>
         <p>In order to complete this project in a timely manner, you will need to upload your manuscript and provide specific pieces of information regarding color, dimensions, and other specifications as we work together to produce a finished work we will all be proud of. You wrote a great book – we’ll make it look great!</p>
-        <p>Just <a href="http://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
+        <p>Just <a href="https://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
         <p>Regards,<br>S4Carlisle Design Team.</p>';
         $emailBody = mb_convert_encoding($emailBody, "HTML-ENTITIES", 'UTF-8');
     } else if ($category == "Cover Design") {
         $emailBody = '<p>Dear ' . $userName . ',</p>
         <p>Thank you for choosing to work with us to create your book cover design. Our professional design team stands ready to guide you through each step of the process. We will work closely with you to deliver an eye-catching cover design that will make readers take notice.</p>
         <p>We will be asking you to provide information and various elements we will need to complete this project, such as relevant specifications, text to appear on the cover, and any images (for which you own all rights and permissions) you would like us to use.</p>
-        <p>Just <a href="http://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
+        <p>Just <a href="https://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
         <p>Regards,<br>S4Carlisle Design Team.</p>';
         $emailBody = mb_convert_encoding($emailBody, "HTML-ENTITIES", 'UTF-8');
     } else if ($category == "Editorial Services") {
@@ -526,7 +554,7 @@ if ($error_count == 0) {
         <p>Thank you for trusting our team to create a great-looking page layout for your book. We will manage all technical aspects of the project, ensure that your book will meet all standard print requirements, and deliver a high-quality, professional design.</p>
         <p>Avail of our copy editing, proofreading and indexing services to give your manuscript a final polish that will give it an edge over others. We’re confident you will be pleased with the results.</p>
         <p>In order to complete this project in a timely manner, you will need to upload your manuscript and provide specific pieces of information regarding color, dimensions, and other specifications as we work together to produce a finished work we will all be proud of. You wrote a great book – we’ll make it look great!</p>
-        <p>Just <a href="http://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
+        <p>Just <a href="https://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
         <p>Regards,<br>S4Carlisle Design Team.</p>';
         $emailBody = mb_convert_encoding($emailBody, "HTML-ENTITIES", 'UTF-8');
     } else if (($category == "Index Services") || ($category == "Index")) {
@@ -534,14 +562,14 @@ if ($error_count == 0) {
         <p>Thank you for trusting our team to create a great-looking page layout for your book. We will manage all technical aspects of the project, ensure that your book will meet all standard print requirements, and deliver a high-quality, professional design.</p>
         <p>Avail of our copy editing, proofreading and indexing services to give your manuscript a final polish that will give it an edge over others. We’re confident you will be pleased with the results.</p>
         <p>In order to complete this project in a timely manner, you will need to upload your manuscript and provide specific pieces of information regarding color, dimensions, and other specifications as we work together to produce a finished work we will all be proud of. You wrote a great book – we’ll make it look great!</p>
-        <p>Just <a href="http://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
+        <p>Just <a href="https://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
         <p>Regards,<br>S4Carlisle Design Team.</p>';
         $emailBody = mb_convert_encoding($emailBody, "HTML-ENTITIES", 'UTF-8');
     } else {
         $emailBody = '<p>Dear ' . $userName . ',</p>
         <p>Thank you for trusting our team to create a great-looking page layout for your book. We will handle all technical aspects of the project, ensure that your book will meet all standard print requirements, and deliver a high-quality, professional design. We’re confident you will be pleased with the results.</p>
         <p>In order to complete this project in a timely manner, you will need to upload your manuscript and provide specific pieces of information regarding color, dimensions, and other specifications as we work together to produce a finished work we will all be proud of. You wrote a great book – we’ll make it look great!</p>
-        <p>Just <a href="http://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
+        <p>Just <a href="https://selfpublish.s4carlisle.com/' . $categoryName . '.php?id=' . $eid . '">[Click Here]</a> to begin. Please feel free to contact us if you have any questions at <a href="mailto:selfpublish@s4carlisle.com" target="_blank" >selfpublish@s4carlisle.com</a></p>
         <p>Regards,<br>S4Carlisle Design Team.</p>';
         $emailBody = mb_convert_encoding($emailBody, "HTML-ENTITIES", 'UTF-8');
     }
@@ -573,6 +601,7 @@ if ($error_count == 0) {
 
         //Content
         $mail->isHTML(true); //Set email format to HTML
+        
         $mail->Subject = 'Starting your '.strtolower($category).' project';
         $mail->Body = $emailBody;
         //$mail->AltBody = "Project:".$id;

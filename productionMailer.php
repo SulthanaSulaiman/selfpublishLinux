@@ -323,7 +323,7 @@ if($error_count==0)
         </tr>
         <tr>
             <th style="border: 1px solid black;border-collapse: collapse; text-align:left;padding:10px;">URL</th>
-            <td style="border: 1px solid black;border-collapse: collapse; text-align:left;padding:10px;"><a href="http://selfpublish.s4carlisle.com/' . $categoryName . 'P.php?id=' . $eid . '">[Click Here]</a>
+            <td style="border: 1px solid black;border-collapse: collapse; text-align:left;padding:10px;"><a href="https://selfpublish.s4carlisle.com/' . $categoryName . 'P.php?id=' . $eid . '">[Click Here]</a>
             </td>
         </tr>
 

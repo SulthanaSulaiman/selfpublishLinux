@@ -351,19 +351,19 @@ if (isset($_GET['userDetails'])) {
                 $surName = $userDetails["surName"];
             } else {
                 $surName = null;
-                $resp[] = array(
+               /* $resp[] = array(
                     'StatusCode' => 'JSON002',
                     'Status' => 'surName is empty.'
                 );
-                $error_count += 1;
+                $error_count += 1;*/
             }
         } else {
             $surName = null;
-            $resp[] = array(
+           /* $resp[] = array(
                 'StatusCode' => 'JSON001',
                 'Status' => 'surName is not found.'
             );
-            $error_count += 1;
+            $error_count += 1;*/
             //header('Content-Type: application/json; charset=utf-8');
             //echo json_encode($resp);
         }

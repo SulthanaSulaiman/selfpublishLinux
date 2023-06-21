@@ -1,6 +1,6 @@
 <?php
 try{
-$conn=new mysqli("localhost","root","","selfpublish");
+$conn=new mysqli("localhost","root","india@123","s4c");
 if($conn->connect_error){
     die("Connection Failed!".$conn->connect_error);
 }
@@ -16,8 +16,8 @@ class DAO
 
     public $servername = "localhost";
     public $username = "root";
-    public $password = "";
-    public $dbname = "selfpublish";
+    public $password = "india@123";
+    public $dbname = "s4c";
     public $cnx = null;
 
     public function connection (){

@@ -269,7 +269,7 @@
                     // Restore the original text of the submit button
                     $('#spinner').hide();
                     // Handle the error
-                    alert("Error: " + error);
+                    alert('\n\u26A0 An error occurred while submitting the form. Please contact the help desk: selfpublish@s4carlisle.com.');
                     location.reload();
                 }
             });

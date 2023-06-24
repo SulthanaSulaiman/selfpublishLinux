@@ -87,21 +87,21 @@ if (isset($_POST['coverType'])) {
 if (isset($_POST['priceBarcode'])) {
     $priceBarcode = $_POST['priceBarcode'];
 } else {
-    $priceBarcode = 0;
+    $priceBarcode = 0.0;
 }
 
 if (isset($_POST['trimSize'])) {
     $trimSize = $_POST['trimSize'];
 
 } else {
-    $trimSize = 0;
+    $trimSize = null;
 }
 
 
 if (isset($_POST['paperWeight'])) {
     $paperWeight = $_POST['paperWeight'];
 } else {
-    $paperWeight = 0;
+    $paperWeight = 0.0;
 }
 
 
@@ -168,14 +168,14 @@ if (isset($_POST['coverImageId'])) {
 if (isset($_POST['trimSizeWidth'])) {
     $trimSizeWidth = $_POST['trimSizeWidth'];
 } else {
-    $trimSizeWidth = 0;
+    $trimSizeWidth = 0.0;
 }
 
 
 if (isset($_POST['trimSizeHeight'])) {
     $trimSizeHeight = $_POST['trimSizeHeight'];
 } else {
-    $trimSizeHeight = 0;
+    $trimSizeHeight = 0.0;
 }
 
 if (isset($_POST['other'])) {

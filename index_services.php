@@ -615,11 +615,11 @@ require 'connection.php';
                 // Show the spinner inside the submit button
                 $('#spinner').show();
 
-                // console.log("URL before decode:http://selfpublish.s4carlisle.com/authorMailer.php?bookDetails=%7B%22categoryName%22%3A%22" + category + "%22%2C%22bookName%22%3A%22" + bookName + "%22%7D&userDetails=%7B%22firstName%22%3A%22" + firstName + "%22%2C%22surName%22%3A%22" + surName + "%22%2C%22mailId%22%3A%22" + mailId + "%22%7D&bookInfo=%7B%22ISBN%22%3A%20%22" + isbn + "%22%2C%22Cover%22%3A%20%22" + cover + "%22%2C%22Editorial%20Complexity%22%3A%20%22" + editorialComplexity + "%22%2C%22Number%20of%20Manuscript%20Pages%22%3A%20%22" + numberOfManuscriptPages + "%22%7D");
+                // console.log("URL before decode:https://selfpublish.s4carlisle.com/authorMailer.php?bookDetails=%7B%22categoryName%22%3A%22" + category + "%22%2C%22bookName%22%3A%22" + bookName + "%22%7D&userDetails=%7B%22firstName%22%3A%22" + firstName + "%22%2C%22surName%22%3A%22" + surName + "%22%2C%22mailId%22%3A%22" + mailId + "%22%7D&bookInfo=%7B%22ISBN%22%3A%20%22" + isbn + "%22%2C%22Cover%22%3A%20%22" + cover + "%22%2C%22Editorial%20Complexity%22%3A%20%22" + editorialComplexity + "%22%2C%22Number%20of%20Manuscript%20Pages%22%3A%20%22" + numberOfManuscriptPages + "%22%7D");
 
                 $.ajax({
                     method: "post",
-                    url: "http://selfpublish.s4carlisle.com/productionMailer.php?id=<?php echo $eid; ?>",
+                    url: "https://selfpublish.s4carlisle.com/productionMailer.php?id=<?php echo $eid; ?>",
                     dataType: "json",
                     data: $('#authorForm').serialize(),
                     success: function (response) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2023 at 02:54 PM
+-- Generation Time: Jun 24, 2023 at 01:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -54,11 +54,13 @@ CREATE TABLE `services` (
   `trimSize` text DEFAULT NULL,
   `visonInteriorDesign` text DEFAULT NULL,
   `requestedServices` varchar(255) DEFAULT NULL,
-  `userName` varchar(255) NOT NULL,
-  `userMail` text NOT NULL,
+  `userName` varchar(255) DEFAULT NULL,
+  `userMail` text DEFAULT NULL,
   `submitCount` int(11) NOT NULL DEFAULT 0,
   `fileName` varchar(255) DEFAULT NULL,
-  `other` text DEFAULT NULL
+  `other` text DEFAULT NULL,
+  `interiorDesign1` varchar(255) DEFAULT NULL,
+  `project_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

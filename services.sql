@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2023 at 01:26 PM
+-- Generation Time: Jun 24, 2023 at 02:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -60,7 +60,7 @@ CREATE TABLE `services` (
   `fileName` varchar(255) DEFAULT NULL,
   `other` text DEFAULT NULL,
   `interiorDesign1` varchar(255) DEFAULT NULL,
-  `project_date` date NOT NULL DEFAULT current_timestamp()
+  `project_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
